@@ -15,6 +15,9 @@ function printBreadthFirst(start) {
     // create a set to store visited nodes
     const visited = new Set();
 
+    // array to store the order of visited nodes
+    const result = [];
+
     // mark the start node as visited
     visited.add(start);
 
@@ -23,8 +26,8 @@ function printBreadthFirst(start) {
         // dequeue the first node
         const currentNode = queue.shift();
 
-        // print the current node
-        console.log(currentNode);
+        // add the current node to the result array
+        result.push(currentNode);
 
         // for each neighbour of the current node
         for (let neighbour of adjList[currentNode]) {
@@ -38,14 +41,16 @@ function printBreadthFirst(start) {
             }
         }
     }
+
+    console.log(result); // print the entire array at the end
 }
 
 console.log("First Test:");
-printBreadthFirst(3); // Expected output: 3, 2, 4, 1, 5, 6 (or similar order)
+printBreadthFirst(3); // Expected output: [3, 2, 4, 1, 5, 6] (or similar order)
 console.log("Second Test:");
-printBreadthFirst(6); // Expected output: 6, 4, 3, 5, 2, 1 (or similar order)
+printBreadthFirst(6); // Expected output: [6, 4, 3, 5, 2, 1] (or similar order)
 console.log("Third Test:");
-printBreadthFirst(4); // Expected output: 4, 3, 5, 6, 2, 1 (or similar order)
+printBreadthFirst(4); // Expected output: [4, 3, 5, 6, 2, 1] (or similar order)
 
 
 
