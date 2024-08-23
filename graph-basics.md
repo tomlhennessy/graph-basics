@@ -158,3 +158,101 @@ Breadth-First Traversal (BFT) is a fundamental graph traversal algorithm that ex
     • Finding Shortest Paths: BFT is the basis for algorithms like Dijkstra's when edge weights are uniform
     • Web Crawlers: to explore all pages connected by links
     • Social Networking: finding the shortest connection path between two users
+
+
+
+# Depth-First Traversal (DFT) of Graphs
+
+Depth-First Traversal (DFT) is a fundamental graph traversal algorithm that explores as far down one path as possible before backtracking to explore other paths. This approach contrasts with Breadth-first Traversal (BFT), which explores all neighbours at the present depth before moving on to nodes at the next depth level
+
+* Key Concepts:
+
+    1. Depth-First Traversal Overview:
+        • Traversal Order: DFT visits nodes by diving deep into one branch of the graph first. It continues along that path until it cannot go any further (i.e. reaches a node with no unvisited neighbours), then it backtracks to explore other branches
+        • Ude Case: DFT is useful for exploring all possible paths from a node, solving puzzles, and tasks like topological sorting, where you need to visit nodes in a specific sequence
+
+    2. DFT Algorithm Steps:
+
+        1. Initialise:
+            • Create a stack and push the starting node onto it
+            • Create a set to store visited nodes
+
+        2. DFT Algorithm Steps:
+            1. Initialise
+                • Create a stack and push the starting node onto it
+                • Create a set to store visited nodes
+
+            2. Traversal:
+                • While the stack is not empty:
+                    1. Pop the node on the top of the stack (current node)
+                    2. Perform the require action on the current node (e.g. print it, add it to a list)
+                    3. For each unvisited neighbour of the current node:
+                        - Mark it as visited
+                        - Push it onto the stack
+
+    3. DFT Example with Adjacency List:
+        • Graph Representation:
+        ```js
+        const adjList = {
+            1: [2, 5],
+            2: [1, 3, 5],
+            3: [2, 4],
+            4: [3, 5, 6],
+            5: [1, 2, 4],
+            6: [4]
+        }
+        ```
+        • Initialisation:
+            - `stack = [1]` (starting node is 1)
+            - `visited = {1}` (node 1 is marked as visited)
+
+    4. DFT Execution:
+
+        • First Iteration:
+            - Pop `1`. Current node is `1`
+            - Push its unvisited neighbours: `2` and `5`
+            - `stack = [2, 5]`
+            - `visited = {1, 2, 5}`
+
+        • Second Iteration:
+            - Pop `5`. Current node is `5`
+            - Push its unvisited neighbour: `4`
+            - `stack = [2, 4]`
+            - `visited = {1, 2, 4, 5}`
+
+        • Third Iteration:
+            - Pop `4`. Current node is `4`
+            - Push its unvisited neighbours: `3` and `6`
+            - `stack = [2, 3, 6]`
+            - `visited = {1, 2, 3, 4, 5, 6}`
+
+        • Fourth Iteration:
+            - Pop `6`. Current node is `6`
+            - No unvisited neighbours
+            - `stack = [2, 3]`
+
+        • Fifth Iteration:
+            - Pop `3`. Current node is `3`
+            - No univisited neighbours
+            - `stack = [2]`
+
+        • Sixth Iteration:
+            - Pop `2`. Current node is `2`
+            - No unvisited neighbours
+            - `stack = []`
+
+    5. DFT Conclusion:
+        • The traversal ends when the stack is empty
+        • All nodes have been visited exactly once, ensuring complete coverage of the graph
+
+    6. Key Differences Between DFT and BFT:
+        • Stack vs. Queue: DFT uses a stack (last-in, first-out) to manage traversal order, while BFT uses a queue (first-in, first-out)
+        • Traversal Order: DFT goes deep along one path before backtracking, while BFT explores all nodes at the current depth before moving deeper
+
+* Applications of Depth-First Traversal:
+    • Solving Mazes or Puzzles: DFT can explore all possible paths in a decision tree
+    • Pathfinding: it is used in algorithms like DFS (Depth-First Search) for exploring all possible routes
+    • Topological Sorting: DFT is useful in tasks where nodes need to be visited in a specific order, such as task scheduling
+
+* Summary:
+    • Depth-First Traversal is an algorithm that explores all the way down one branch before backtracking. It is implemented using a stack to keep track of the nodes to visit next, and a set to track visited nodes, ensuring each node is visited only once. This traversal method is essential in solving problems where deep exploration of paths is needed, and it contrasts with Breadth-First Traversal, which explores nodes layer by layer.
