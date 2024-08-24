@@ -256,3 +256,70 @@ Depth-First Traversal (DFT) is a fundamental graph traversal algorithm that expl
 
 * Summary:
     • Depth-First Traversal is an algorithm that explores all the way down one branch before backtracking. It is implemented using a stack to keep track of the nodes to visit next, and a set to track visited nodes, ensuring each node is visited only once. This traversal method is essential in solving problems where deep exploration of paths is needed, and it contrasts with Breadth-First Traversal, which explores nodes layer by layer.
+
+
+# Breadth-First Search (BFS) in Graphs
+
+* Key Concepts:
+    • Search vs. Traversal:
+        - Traversal: visit all nodes in a graph
+        - Search: visit nodes to find a specific target node
+
+* Breadth-First Search (BFS) Overview:
+    • Objective: explore nodes level by level from a starting node
+    • Primary Data Structures:
+        - Queue: to track nodes to be explored next
+        - Set: to track visited nodes and avoid revisiting
+
+* BFS Algorithm Steps:
+    1. Initialise:
+        • Queue: enqueue the starting node
+        • Visited Set: add the starting node to the set
+
+    2. While Queue is Not Empty:
+        • Dequeue the first node (currentNode)
+        • Check: if `currentNode` is the target, return the result
+        • For each unvisited neighbour of `currentNode`:
+            - Add it to the visited set
+            - Enqueue it to the queue
+
+    3. End Condition:
+        • If the queue is empty and the target hasn't been found, return `false`
+
+* BFS Example Implementation:
+
+    • Graph Representation (Adjacency List):
+    ```py
+    adjList = {
+        1: [2, 5],
+        2: [1, 3, 5],
+        3: [2, 4],
+        4: [3, 5],
+        5: [1, 2, 4],
+        6: []
+    }
+    ```
+    Goal: determine if node `3` is reachable from node `1`
+    Initial State:
+        - `queue = [1]`
+        - `visited = {1}`
+
+    • First Loop:
+        - Dequeue `1`, enqueue its neigbours `2` and `5`
+        - `queue = [2, 5]`, `visited = {1, 2, 5, 3}`
+
+    • Second Loop:
+        - Dequeue `2`, enqueue neighbour `3`,
+        - `queue = [5, 3]`, `visited = {1, 2, 5, 3}`
+
+    • Third Loop:
+        - Dequeue `5`, enqueue neighbour `4`
+        - `queue = [3, 4]`, `visited = {1, 2, 5, 3, 4}`
+
+    • Fourth Loop:
+        - Dequeue `3`, which matches the target
+        - Result: `3` is reachable from `1`, return `true`
+
+* Summary:
+    • BFS is effective for finding the shortest path in unweighted graphs or determining reachability between nodes
+    • The algorithm ensures all nodes at the current depth are explored before moving deeper into the graph
