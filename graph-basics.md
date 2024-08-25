@@ -323,3 +323,67 @@ Depth-First Traversal (DFT) is a fundamental graph traversal algorithm that expl
 * Summary:
     • BFS is effective for finding the shortest path in unweighted graphs or determining reachability between nodes
     • The algorithm ensures all nodes at the current depth are explored before moving deeper into the graph
+
+
+# Finding A Shortest Path (BFS)
+
+* Key Concept
+    • Breadth-First Search (BFS) is commonly used to find A shortest path between two nodes in an unweighted graph. The emphasis is on "A" because there may be multiple valid shortest paths.
+
+* BFS for Shortest Path: Overview
+    1. Graph Representation: Use an adjacency list to represent the graph
+        • Example:
+        ```py
+        adjList = {
+            1: [2, 5],
+            2: [1, 3, 5],
+            3: [2, 4],
+            4: [3, 5],
+            5: [1, 2, 4],
+            6: []
+        }
+        ```
+
+    2. Algorithm Steps:
+
+        1. Initialise Queue and Visited Set:
+            • Start with the node you want to find a path from (e.g. node '1')
+            • Enqueue a list containing just the start node, representing the path
+            • Initialise a set to track visited nodes
+            • Example:
+            ```py
+            queue = [[1]]
+            visited = {1}
+            target = 3
+            ```
+
+        2. Loop Until Queue is Empty:
+            • Dequeue the first path in the queue
+            • Check if the last node in the path is the target. If yes, return the path
+            • Otherwise, for each unvisited neighbour of the last node:
+                - Add the neighbour to the visited set
+                - Copy the current path and append the neighbour
+                - Enqueue this new path
+            • Continue this process until the queue is empty or the target is found
+
+        3. Process Detail:
+            • Example Path Finding from 1 to 3
+                - Start with path `[1]`. Dequeue and check the last node (`1`)
+                - Add neighbours `2` and `5` to visited and enqueue paths `[1, 2]` and `[1, 5]`
+                - Continue this for subsequent paths until the target node is found
+                - Example queue states:
+
+                ```py
+                queue = [[1, 2], [1, 5]]
+                queue = [[1, 2], [1, 2, 3]] # found the target in this path
+                ```
+
+        4. End Condition:
+            • When the target node is reached, return the current path as the shortest path
+            • If the queue empties without finding the target, return a failure message
+
+
+* Key Takeaways
+    • BFS is effective for finding the shortest path in an unweighted graph because it explores all possible paths level by level, ensuring the first time it reaches the target node, it's via the shortest path
+    • Visited Set is crucial to prevent revisiting nodes and thus avoiding cycles, which keeps the algorithm efficient
+    • Path Tracking: By enqueueing entire paths rather than individual nodes, BFS can return the exact sequence of nodes forming a shortest path
