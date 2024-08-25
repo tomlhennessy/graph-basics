@@ -85,3 +85,41 @@ console.log("Second Test:");
 console.log(aShortestPath(4, 1)); // -> [ 4, 5, 1 ] (one possible solution)
 console.log("Third Test:");
 console.log(aShortestPath(6, 1)); // -> false
+
+
+// 3. Degrees of Seperation
+
+function degreesOfSeparation(start, end) {
+    let queue = [[start]];
+    let visited = new Set();
+    visited.add(start);
+
+    while (queue.length > 0) {
+        let currentPath = queue.shift();
+        let currentNode = currentPath[currentPath.length - 1];
+
+        if (currentNode === end) {
+            return currentPath.length - 1;
+        }
+
+        let neighbours = adjList[currentNode];
+        for (let neighbour of neighbours) {
+            if (!visited.has(neighbour)) {
+                visited.add(neighbour);
+                let newPath = currentpath.concat([neighbour]);
+                queue.push(newPath);
+            }
+        }
+    }
+
+    return -1; // return -1 if there's no path between start and end
+}
+
+console.log("First Test:");
+console.log(degreesOfSeparation(1, 3)); // -> 2 (1 -> 2 -> 3)
+
+console.log("Second Test:");
+console.log(degreesOfSeparation(4, 1)); // -> 2 (4 -> 5 -> 1)
+
+console.log("Third Test:");
+console.log(degreesOfSeparation(6, 1)); // -> -1 (No connection)
