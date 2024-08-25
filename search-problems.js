@@ -44,3 +44,44 @@ console.log("Second Test:");
 console.log(breadthFirstSearch(4, 1)); // -> true
 console.log("Third Test:");
 console.log(breadthFirstSearch(6, 1)); // -> False
+
+
+// 2. A Shortest Path
+// refer to adjList^
+function aShortestPath(start, end) {
+    // initialise the queue with the start path
+    let queue = [[start]];
+    // initialise the set of visited nodes
+    let visited = new Set();
+    visited.add(start);
+
+    // BFS Loop
+    while (queue.length > 0) {
+        // dequeue the first path in the queue
+        let currentPath = queue.shift();
+        // get the last node in the current path
+        let currentNode = currentPath[currentPath.length - 1]
+
+        if (currentNode === end) {
+            return currentPath;
+        }
+
+        let neighbours = adjList[currentNode];
+        for (let neighbour of neighbours) {
+            if (!visited.has(neighbour)) {
+                visited.add(neighbour);
+                let newPath = currentPath.concat([neighbour]);
+                queue.push(newPath);
+            }
+        }
+    }
+
+    return false;
+}
+
+console.log("First Test:");
+console.log(aShortestPath(1, 3)); // -> [ 1, 2, 3 ] (one possible solition)
+console.log("Second Test:");
+console.log(aShortestPath(4, 1)); // -> [ 4, 5, 1 ] (one possible solution)
+console.log("Third Test:");
+console.log(aShortestPath(6, 1)); // -> false
