@@ -387,3 +387,83 @@ Depth-First Traversal (DFT) is a fundamental graph traversal algorithm that expl
     • BFS is effective for finding the shortest path in an unweighted graph because it explores all possible paths level by level, ensuring the first time it reaches the target node, it's via the shortest path
     • Visited Set is crucial to prevent revisiting nodes and thus avoiding cycles, which keeps the algorithm efficient
     • Path Tracking: By enqueueing entire paths rather than individual nodes, BFS can return the exact sequence of nodes forming a shortest path
+
+
+# Solving Graph Problems
+
+* Overview
+    • Graph problems can be diverse, but most can be simplified to three main steps:
+        1. Identify and Define the Type of Graph
+        2. Implement the `getNeighbours` Function
+        3. Traverse the Graph
+    • These steps align with a systematic approach to problem-solving, similar to the Polya problem-solving framework
+
+* Step 1: Identify and Define the Type of Graph
+    • Understand the Problem:
+        - Nodes: identify what the nodes represent (e.g. people, locations, etc.)
+        - Edges: determine the connections or relationships between nodes
+
+    • Graph Characteristics:
+        - Directed or Undirected: does the relationship flow one way (directed) or both ways (undirected)
+        - Weighted or Unweighted: are there weights or costs associated with the edges?
+        - Cyclic or Acyclic: can you encounter cycles in the graph, or is it acyclic?
+
+    • Example:
+        - Social Network: nodes are people, and edges represent friendships. Typically, this is an undirected, unweighted graph.
+
+
+* Step 2: Implement the `getNeighbours` Function
+    • Purpose: this function retreives the adjacent nodes (neighbours) for a given node
+    • Implementation Varies: depending on the graph representation
+        - Adjacency List: simply return the list of nodes connected to the given node
+        - Other representations: you might need to compute or extract neighbours differently
+    • Example:
+    ```js
+    function getNeighbours(node, graph) {
+        return graph[node];
+    }
+    ```
+
+* Step 3: Traverse the Graph
+    • Choose the Appropriate Traversal:
+        - Bread-First Search (BFS): Ideal for finding the shortest path or all nodes within a certain degree of separation
+        - Depth-First Search (DFS): Useful for exploring all paths or finding a path when cycles or exhaustive search are involved
+
+    • BFS Algorithm Steps:
+        1. Initialise: create a queue with the starting node's path and a set for visited nodes
+        2. Loop: while the queue is not empty:
+            - Dequeue the first path
+            - Get the last node in this path
+            - If not visited, mark it as visited
+            - For each neighbour, copy the current path, append the neighbour, and enqueue this new path
+        3. End Condition: the loop continues until the queue is empty, or a target is found
+
+    • Example:
+    ```js
+    function socialConnection(name, degrees, graph) {
+        const queue = [[name]];
+        const visited = new Set();
+        const friends = [];
+
+        while (queue.length > 0) {
+            let path = queue.shift();
+            let currentNode = path[path.length - 1];
+
+            if (!visited.has(currentNode)) {
+                visited.add(currentNode);
+
+                if (path.length > 1 && path.length <= degrees + 1) {
+                    friends.push(currentNode);
+                }
+
+                let neighbours = getNeighbours(currentNode, graph);
+                for (let neighbour of neighbours) {
+                    let newPath = [...path, neighbour];
+                    queue.push(newPath);
+                }
+            }
+        }
+
+        return friends;
+    }
+    ```
