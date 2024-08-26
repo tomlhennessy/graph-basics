@@ -467,3 +467,99 @@ Depth-First Traversal (DFT) is a fundamental graph traversal algorithm that expl
         return friends;
     }
     ```
+
+
+# Solving Matrix Graph Problems
+
+* Overview
+    When solving graph problems using a matrix, the approach is similar to solving problems with an adjacency list, but with key differences due to the structure of a matrix. The three essential steps remain the same:
+        1. Identify and Define the Type of Graph
+        2. Implement the `getNeighbours` function
+        3. Traverse the Graph
+
+
+1. Identify and Define the Type of Graph
+    • Matrix Definition: a matrix is a two-dimensional array representing a graph, where:
+        - Nodes are elements in the matrix
+        - Edges are represented by adjacency between nodes
+    • Key Questions:
+        - What is the problem asking you to do? (search, traversal, etc.)
+        - What does the matrix represent? (nodes, edges and their relationships)
+        - What are valid neighbours? (adjacent nodes, possibly including diagonals)
+        - Is the problem a search or a traversal? (depth-first or breadth-first)
+    • Example Matrix:
+    ```js
+    const matrix = [
+        [ 0, 1, 0, 0, 1 ],
+        [ 1, 0, 0, 0, 1 ],
+        [ 1, 1, 0, 1, 1 ],
+        [ 0, 1, 1, 0, 0 ],
+        [ 0, 0, 0, 0, 0 ]
+    ];
+    ```
+
+2. Implement the `getNeighbours` Function
+    • Purpose: returns all valid neighbours of a given node in the matrix
+    • Neighbours:
+        - Direct: nodes directly above, below, left, or right
+        - Diagonal: nodes diagonally adjacent (optional depending on the problem)
+    • Implementation Example:
+    ```js
+    function getNeighbours(node, matrix) {
+        const [row, col] = node;
+        const neighbours = [];
+
+        // check up
+        if (row > 0) neighbours.push([row - 1, col]);
+        // check down
+        if (row < matrix.length - 1) neighbours.push([row + 1, col]);
+        // check left
+        if (col > 0) neighbours.push([row, col - 1]);
+        // check right
+        if (col < matrix[0].length - 1) neighbours.push([row, col + 1]);
+
+        return neighbours;
+    }
+    ```
+    • Edge Cases: handle cases where nodes are on the edges or corners of the matrix
+
+
+3. Traverse the Graph
+    • Approach: similar to adjacency list traversal but adapted for matrix coordinates
+    • Steps:
+        1. Initialise a queue with the starting node
+        2. Create a visited set to track visited nodes, converting node coordinates to strings (e.g. `'row,col'`)
+        3. While the queue is not empty
+            - dequeue a node
+            - mark it as visited
+            - add its neighbours to the queue
+        • Example:
+
+        ```js
+        function traverseMatrix(matrix, startNode) {
+            const queue = [startNode];
+            const visited = new Set([startNode.toString()]);
+
+            while (queue.length > 0) {
+                const [row, col] = queue.shift();
+                // process the current node (row, col)
+
+                for (let neighbour of getNeighbours([row, col], matrix)) {
+                    const neighbourStr = neighbour.toString();
+                    if (!visited.has(neighbourStr)) {
+                        visited.add(neighbourStr);
+                        queue.push(neighbour);
+                    }
+                }
+            }
+        }
+        ```
+        • Search Implementation: similar to traversal but stops when a specific condition or node is found
+
+* Key Points:
+    • Matrix vs. Adjacency List: the main difference lies in how you access and represent neighbours and how you manage node identification (using coordinates in a matrix)
+    • Visited Set: always convert matrix coordinates to a string when adding to or checking in the visited set to ensure proper comparison
+    • Problem-Specific Neighbours: define what constitutes a valid neighbour based on the problem's requirements (e.g. direct vs. diagonal neighbours)
+
+* Conclusion
+While the structure of a matrix differs from an adjacency list, the fundamental steps to solve graph problems remain the same: identify the graph type, implement a `getNeighbours` function, and traverse or search the graph.
